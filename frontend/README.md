@@ -1,50 +1,69 @@
-# Welcome to your Expo app 👋
+This is a scaffold for an FCL NextJS Dapp on the Flow Blockchain.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Features Provided
 
-## Get started
+- FCL setup and configuration
+- "flow dev" integration for automatic local account creation and contract deployment
+- Wallet Discovery (including Dev Wallet on Emulator)
+- CLI private key separation for security
+- Flow.json loading for contract placeholders
+- Authentication
+- CDC file loader
+- Custom hooks
+- Deployment 
 
-1. Install dependencies
+## Featues TODO
 
-   ```bash
-   npm install
-   ```
+- Mainnet deployment
+- JS Testing
 
-2. Start the app
+## Running the App
 
-   ```bash
-    npx expo start
-   ```
+First run:
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Local with Flow Dev, the Emulator, and Dev Wallet
 
-## Learn more
+Run the following to run Flow Dev, the Emulator, and Dev Wallet:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npm run dev:local
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Note: Flow Dev will will automatically create new accounts and deploy for you while developing. Your flow.json will be updated automatically. Committing these changes for local development is unncessary.
 
-## Join the community
+### Testnet
 
-Join our community of developers creating universal apps.
+If you haven't yet created a testnet account, in the CLI run:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```
+flow accounts create
+```
+
+Follow the steps and select testnet. This will create a `[name].pkey` file (make sure this is gitignored) and add your account to flow.json.
+
+Then in `flow.json`, add the contracts you'd like to be deployed to testnet under this account:
+
+```
+// Inside of "deployments"
+"testnet": {
+  "testnet-account": [
+    "HelloWorld"
+  ]
+}
+```
+
+Then run:
+
+```
+npm run dev:testnet:deploy
+``` 
+
+Whenever you need to redeploy changed contracts to Testnet while seeing the diff between deployed contracts and updates being pushed, you can run:
+
+```
+npm run dev:testnet:update
+```
