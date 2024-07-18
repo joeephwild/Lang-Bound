@@ -1,27 +1,49 @@
 import "../styles/globals.css";
 import { FlowProvider } from "../context/FlowContext";
-import { UserProvider } from "../context/UserContext";
-import { ContractProvider } from "../context/ContractProvider";
-import * as fcl from "@onflow/fcl";
+import { UserProvider } from "../context/ProfileContext";
+import { MentorProvider } from "../context/MentorContext";
+import { CommunityProvider } from "../context/CommunityContext";
+import { LacentBadgeProvider } from "../context/Badge";
+import { LacentContentProvider } from "../context/LacentContentContext";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { Alfajores, Celo, Cannoli } from "@celo/rainbowkit-celo/chains";
+import "@rainbow-me/rainbowkit/styles.css";
+import { publicProvider } from "wagmi/providers/public";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
-fcl.config({
-  "accessNode.api": "https://rest-testnet.onflow.org",
-  "discovery.wallet": "https://fcl-discovery.onflow.org/testnet/authn",
-  "app.detail.icon":
-    "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.11b1a610.png&w=48&q=75",
-  "app.detail.title": "Lacent Dapp",
+const { chains, publicClient } = configureChains(
+  [Alfajores, Celo],
+  [publicProvider()]
+);
+
+const connectors = [new InjectedConnector({ chains })];
+
+const wagmiConfig = createConfig({
+  connectors,
+  publicClient: publicClient,
 });
 
-function MyApp({ Component, pageProps }) {
+const appInfo = {
+  appName: "Celo Composer",
+};
 
+function MyApp({ Component, pageProps }) {
   return (
-    <FlowProvider>
-      <ContractProvider>
-        <UserProvider>
-          <Component {...pageProps} />
-        </UserProvider>
-      </ContractProvider>
-    </FlowProvider>
+    <WagmiConfig config={wagmiConfig}>
+      <FlowProvider>
+        <CommunityProvider>
+          <MentorProvider>
+            <UserProvider>
+              <LacentBadgeProvider>
+                <LacentContentProvider>
+                  <Component {...pageProps} />
+                </LacentContentProvider>
+              </LacentBadgeProvider>
+            </UserProvider>
+          </MentorProvider>
+        </CommunityProvider>
+      </FlowProvider>
+    </WagmiConfig>
   );
 }
 

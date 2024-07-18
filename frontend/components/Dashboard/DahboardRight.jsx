@@ -5,10 +5,12 @@ import AllMentorCard from "./AllMentorCard";
 import PodcastCard from "./PodcastCard";
 import { Podcast } from "../../utils";
 import AllCommunitiesCard from "./AllCommunityCard";
+import { useLacentContent } from "../../context/LacentContentContext";
 
 const DahboardRight = () => {
+  const { allContent } = useLacentContent();
   return (
-    <>
+    <div className="min-h-screen">
       <span className="text-[28px] text-Grey/900">Dashboard</span>
       <IntroCard />
       {/** mentors section */}
@@ -18,7 +20,7 @@ const DahboardRight = () => {
             <h3 className="text-[16px] font-medium text-Black">
               Available mentors
             </h3>
-            <p className="text-[14px] font-normal text-Grey">
+            <p className="text-[14px] w-[300px] font-normal text-Grey">
               Book a language mentor to fast track your learning
             </p>
           </div>
@@ -38,7 +40,7 @@ const DahboardRight = () => {
             <h3 className="text-[16px] font-medium text-Black">
               Trending podcasts
             </h3>
-            <p className="text-[14px] font-normal text-Grey">
+            <p className="text-[14px] w-[300px] font-normal text-Grey">
               Improve your listening skills with recommended podcasts
             </p>
           </div>
@@ -47,8 +49,8 @@ const DahboardRight = () => {
             <ChevronRightIcon className="w-[16px] h-[16px] object-contain" />
           </div>
         </div>
-        <div className="flex flex-col items-center space-y-[24px]">
-          {Podcast.slice(0, 3).map((item, i) => (
+        <div className="grid md:grid-cols-2 grid-cols-1 items-center space-y-[24px]">
+          {allContent.slice(0, 3).map((item, i) => (
             <PodcastCard key={i} {...item} />
           ))}
         </div>
@@ -71,13 +73,13 @@ const DahboardRight = () => {
             <ChevronRightIcon className="w-[16px] h-[16px] object-contain" />
           </div>
         </div>
-        <div className="grid grid-cols-2 items-center space-y-[24px]">
+        <div className="grid md:grid-cols-2 grid-cols-1 items-center space-y-[24px]">
           {Podcast.slice(0, 4).map((item, i) => (
             <AllCommunitiesCard key={i} {...item} />
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

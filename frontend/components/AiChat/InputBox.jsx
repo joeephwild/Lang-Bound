@@ -4,11 +4,13 @@ import fetchAIResponse from "../../lib/mindb";
 import { db } from "../../firebase";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { useFlow } from "../../context/FlowContext";
-
+import { useAccount } from "wagmi";
+import { useUser } from "../../context/ProfileContext";
 
 const InputBox = ({ setText, text }) => {
   const [loading, setIsLoading] = useState(false);
-  const { currentUser } = useFlow();
+  const { accountName } = useUser();
+  const { address: account } = useAccount();
   const sendMessage = async () => {
     try {
       if (text.trim() === "") return alert("input a message");
@@ -18,15 +20,14 @@ const InputBox = ({ setText, text }) => {
       const docRef = await addDoc(collection(db, "chatrooms"), {
         role: "user",
         message: text,
-        userId: currentUser?.addr,
+        userId: account,
         created_at: serverTimestamp(), // Use serverTimestamp() to set the timestamp
       });
-      const response = await fetchAIResponse(text);
-      console.log(response)
+      const response = await fetchAIResponse(text, accountName);
       await addDoc(collection(db, "chatrooms"), {
         role: "ai",
         message: response,
-        userId: currentUser?.addr,
+        userId: account,
         created_at: serverTimestamp(), // Use serverTimestamp() for the AI response as well
       });
 
@@ -36,7 +37,7 @@ const InputBox = ({ setText, text }) => {
     }
   };
   return (
-    <div className="flex items-center px-[21px] py-9 justify-around w-[60%] space-x-10 fixed bottom-0">
+    <div className="flex items-center px-[21px] py-9 justify-around md:w-[60%] w-full space-x-10 fixed bottom-0">
       <input
         value={text}
         onChange={(e) => setText(e.target.value)}

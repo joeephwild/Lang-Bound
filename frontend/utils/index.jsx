@@ -4,6 +4,7 @@ import {
   UserGroupIcon,
   ChipIcon,
   ChatAlt2Icon,
+  ArchiveIcon,
 } from "@heroicons/react/solid";
 import {
   chinese,
@@ -17,6 +18,7 @@ import {
   podcast3,
   polish,
   profile,
+  reward,
   spanish,
 } from "../assets/images";
 
@@ -46,10 +48,10 @@ export const SidebarTab = [
     route: "/aichat",
   },
   {
-    name: "Chat",
-    icons: ChatAlt2Icon,
+    name: "Store",
+    icons: ArchiveIcon,
     active: "chat",
-    route: "/Chat",
+    route: "/store",
   },
 ];
 
@@ -83,35 +85,43 @@ export const mentors = [
 
 export const languages = [
   {
-    image: france,
+    image:
+      "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ffrance.e6360013.png&w=128&q=75",
     name: "French",
   },
   {
-    image: english,
+    image:
+      "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fenglish.7f45068e.png&w=128&q=75",
     name: "English",
   },
   {
-    image: polish,
+    image:
+      "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpolish.ac41e377.png&w=128&q=75",
     name: "Polish",
   },
   {
-    image: korean,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_South_Korea.png",
     name: "Korean",
   },
   {
-    image: spanish,
+    image:
+      "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fspanish.a1908c03.png&w=128&q=75",
     name: "Spanish",
   },
   {
-    image: german,
+    image:
+      "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fgerman.1a4c77a4.png&w=128&q=75",
     name: "German",
   },
   {
-    image: chinese,
+    image:
+      "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fchinese.2b995ea2.png&w=128&q=75",
     name: "Chinese",
   },
   {
-    image: dutch,
+    image:
+      "https://di-hack.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdutch.05b16c3d.png&w=128&q=75",
     name: "Dutch",
   },
 ];
@@ -320,5 +330,29 @@ export const quizDataKoreanToEnglish = [
       "We eat at a restaurant.",
     ],
     correctAnswer: "We play soccer with friends.",
+  },
+];
+
+export const Packages = [
+  {
+    package_id: 1,
+    name: "Bronze Package",
+    image_url: reward,
+    price_in_ether: "0.05",
+    lives_received: 20,
+  },
+  {
+    package_id: 2,
+    name: "Silver Package",
+    image_url: reward,
+    price_in_ether: "0.1",
+    lives_received: 30,
+  },
+  {
+    package_id: 3,
+    name: "Gold Package",
+    image_url: reward,
+    price_in_ether: "1.0",
+    lives_received: 50,
   },
 ];
