@@ -1,11 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useConnect, useAccount, configureChains } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
 import { ethers } from "ethers";
 import { communityAbi, communityAddress } from "../constants/contract";
-import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
-import { publicProvider } from "wagmi/providers/public";
+import { connect, disconnect } from 'starknetkit'
+
 
 // Create the context with default values
 const FlowContext = createContext(undefined);
@@ -19,66 +16,37 @@ export const FlowProvider = ({ children }) => {
   const [active, setActive] = useState("learn");
   const [modalOpen, setModalOpen] = useState(false);
   const [isUserMember, setIsUserMember] = useState(false);
-  const { address, isConnected } = useAccount();
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
-  // console.log(address);
-  // const { chains, publicClient } = configureChains(
-  //   [Alfajores, Celo],
-  //   [publicProvider()]
-  // );
-  // const { connect } = useConnect({
-  //   connector: new InjectedConnector({}),
-  // });
+  const [provider, setProvider] = useState()
+  const [connection, setConnection] = useState()
 
-  // useEffect(() => {
-  //   setHideConnectBtn(true);
-  //   connect();
-  // }, []);
 
   const [walletAddress, setWalletAddress] = useState(null);
 
   useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.request({ method: "eth_accounts" }).then((accounts) => {
-        if (accounts.length > 0) {
-          setWalletAddress(accounts[0]);
-          setHideConnectBtn(true);
-        }
-      });
-    } else {
-      alert("Ethereum desnt exist");
-    }
-  }, []);
-
-  const walletListener = () => {
-    if (window.ethereum) {
-      window.ethereum.on("accountsChanged", (accounts) => {
-        if (accounts.length > 0) {
-          setWalletAddress(accounts[0]);
-          setHideConnectBtn(true);
-        } else {
-          setWalletAddress(null);
-          setHideConnectBtn(false);
-        }
-      });
-    }
-  };
-
-  useEffect(() => {
-    walletListener();
-  }, [walletAddress]);
+ 
+    const connectToStarknet = async () => {
+    
+      const { wallet } = await connect( { modalMode: "neverAsk" } )
+    
+      if (wallet && wallet.isConnected) {
+        setConnection(wallet);
+        setProvider(wallet.account);
+        setWalletAddress(wallet.selectedAddress);
+      }
+    };
+    
+    connectToStarknet();
+  }, [])
 
   const connectWallet = async () => {
-    if (window.ethereum) {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setWalletAddress(accounts[0]);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    const { wallet } = await connect();
+ 
+  if(wallet && wallet.isConnected) {
+    setConnection(wallet)
+    setProvider(wallet.account)
+    setWalletAddress(wallet.selectedAddress)
+  }
   };
 
   const conectwithContract = async () => {
