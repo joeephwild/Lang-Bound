@@ -81,8 +81,8 @@ const Hero = () => {
         <div className="flex flex-row w-full items-right justify-end text-Black text-right mt-6">
           <span className="text-[14px]  font-semibold">
             Powered by{" "}
-            <span className="text-red-600 text-[20px] font-bold">Minipay</span>&{" "}
-            <span className="text-Black text-[20px] font-bold">Celo</span>
+            <span className="text-red-600 text-[20px] font-bold">Starknet</span>&{" "}
+            <span className="text-Black text-[20px] font-bold">Horuslab</span>
           </span>
         </div>
       </div>
