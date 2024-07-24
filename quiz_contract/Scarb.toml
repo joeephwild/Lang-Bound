@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2023_11"
 
 [dependencies]
-starknet = ">=2.6.3"
+starknet = ">=2.6.4"
 
 [[target.starknet-contract]]
