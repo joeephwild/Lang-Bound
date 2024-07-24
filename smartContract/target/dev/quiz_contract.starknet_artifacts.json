@@ -1,0 +1,1 @@
+{"version":1,"contracts":[{"id":"ugdcee4grulrk","package_name":"quiz_contract","contract_name":"QuizContract","module_path":"quiz_contract::QuizContract","artifacts":{"sierra":"quiz_contract_QuizContract.contract_class.json","casm":"quiz_contract_QuizContract.compiled_contract_class.json"}}]}
