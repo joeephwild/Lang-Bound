@@ -52,9 +52,18 @@ export const FlowProvider = ({ children }) => {
       route.push('/dashboard')
   }
   };
-
-  const conectwithContract = async () => {
   
+
+  const automaticallyTRoute = async () => {
+    const { wallet } = await connect();
+ 
+    if(wallet && wallet.isConnected) {
+      setConnection(wallet)
+      setProvider(wallet.account)
+      setWalletAddress(wallet.selectedAddress)
+  
+        route.push('/dashboard')
+    }
   };
 
   // Function to create a new community
@@ -78,6 +87,7 @@ export const FlowProvider = ({ children }) => {
   useEffect(() => {
     retriveUserCommunity();
     ifMember();
+    automaticallyTRoute()
   }, [walletAddress]);
 
   return (
