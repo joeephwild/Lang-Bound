@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { communityAbi, communityAddress } from "../constants/contract";
 import { connect, disconnect } from 'starknetkit'
+import { useRouter } from "next/router";
 
 
 // Create the context with default values
@@ -19,6 +20,7 @@ export const FlowProvider = ({ children }) => {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
   const [provider, setProvider] = useState()
   const [connection, setConnection] = useState()
+  const route = useRouter()
 
 
   const [walletAddress, setWalletAddress] = useState(null);
@@ -46,6 +48,8 @@ export const FlowProvider = ({ children }) => {
     setConnection(wallet)
     setProvider(wallet.account)
     setWalletAddress(wallet.selectedAddress)
+
+      route.push('/dashboard')
   }
   };
 

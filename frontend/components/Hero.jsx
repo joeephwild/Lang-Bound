@@ -42,7 +42,6 @@ const Hero = () => {
         </span>
         <div className="flex items-center space-x-7  md:self-start md:text-start">
           <div>
-      {/** connect button */}
       <div>
         <button onClick={connectWallet} className="bg-Accent text-Black px-[20px] lg:text-[16px] lg:px-[26px] py-[12px] rounded-[8px] text-[12px] font-bold">{walletAddress ? walletAddress.slice(0, 9) : "connect Wallet"}</button>
       </div>
